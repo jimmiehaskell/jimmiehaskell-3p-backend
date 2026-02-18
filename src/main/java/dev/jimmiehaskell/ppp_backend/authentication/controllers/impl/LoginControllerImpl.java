@@ -5,8 +5,10 @@ import dev.jimmiehaskell.ppp_backend.authentication.services.LoginService;
 import dev.jimmiehaskell.ppp_backend.authentication.dtos.LoginRequestDTO;
 import dev.jimmiehaskell.ppp_backend.authentication.dtos.LoginResponseDTO;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+@Service
 public class LoginControllerImpl implements LoginController {
     private final LoginService service;
 

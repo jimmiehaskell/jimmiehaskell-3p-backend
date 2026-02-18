@@ -42,8 +42,8 @@ public class SecurityConfig {
     public SecurityFilterChain sercurityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(HttpMethod.POST, "/users").permitAll()
                 .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/cadastro").permitAll()
                 .anyRequest().authenticated())
             .cors(cors -> {})
             .csrf(AbstractHttpConfigurer::disable)

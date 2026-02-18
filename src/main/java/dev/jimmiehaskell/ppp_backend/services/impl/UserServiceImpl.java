@@ -1,4 +1,4 @@
-package dev.jimmiehaskell.ppp_backend.services.impls;
+package dev.jimmiehaskell.ppp_backend.services.impl;
 
 import dev.jimmiehaskell.ppp_backend.dtos.UserResponseDTO;
 import dev.jimmiehaskell.ppp_backend.repositories.UserRepository;

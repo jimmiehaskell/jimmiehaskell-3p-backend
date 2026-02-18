@@ -1,8 +1,8 @@
 package dev.jimmiehaskell.ppp_backend.authentication.services.impl;
 
-import dev.jimmiehaskell.ppp_backend.authentication.services.LoginService;
 import dev.jimmiehaskell.ppp_backend.authentication.dtos.LoginRequestDTO;
 import dev.jimmiehaskell.ppp_backend.authentication.dtos.LoginResponseDTO;
+import dev.jimmiehaskell.ppp_backend.authentication.services.LoginService;
 import dev.jimmiehaskell.ppp_backend.entities.Role;
 import dev.jimmiehaskell.ppp_backend.repositories.UserRepository;
 import org.springframework.http.ResponseEntity;
@@ -11,10 +11,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.stream.Collectors;
 
+@Service
 public class LoginServiceImpl implements LoginService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final JwtEncoder jwtEncoder;
@@ -29,10 +31,10 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public ResponseEntity<LoginResponseDTO> login(LoginRequestDTO request) {
-        var user = userRepository.findByUsername(request.username());
+    public ResponseEntity<LoginResponseDTO> login(LoginRequestDTO dto) {
+        var user = userRepository.findByUsername(dto.username());
 
-        if (user.isEmpty() || !user.get().isLoginCorrect(request, passwordEncoder)) {
+        if (user.isEmpty() || !user.get().isLoginCorrect(dto, passwordEncoder)) {
             throw new BadCredentialsException("Usuário ou senha inválido.");
         }
 

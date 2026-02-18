@@ -1,4 +1,4 @@
-package dev.jimmiehaskell.ppp_backend.controllers.impls;
+package dev.jimmiehaskell.ppp_backend.controllers.impl;
 
 import dev.jimmiehaskell.ppp_backend.controllers.UserController;
 import dev.jimmiehaskell.ppp_backend.dtos.UserResponseDTO;
