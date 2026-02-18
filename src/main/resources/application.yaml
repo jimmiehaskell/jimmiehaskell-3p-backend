@@ -1,9 +1,16 @@
+jwt:
+  public:
+    key: classpath:app_key.pub
+  private:
+    key: classpath:app_key
 spring:
   application:
     name: 3p-backend
-  profiles:
-    active: dev
+  datasource:
+    driver-class-name: org.postgresql.Driver
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  profiles:
+    active: dev

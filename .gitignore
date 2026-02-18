@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+app_key
+app_key.pub
+http-client.env.json
+docker/
