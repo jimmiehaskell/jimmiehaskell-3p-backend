@@ -1,4 +1,4 @@
-package dev.jimmiehaskell.ppp_backend.config;
+package dev.jimmiehaskell.ppp_backend.authentication.config;
 
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;

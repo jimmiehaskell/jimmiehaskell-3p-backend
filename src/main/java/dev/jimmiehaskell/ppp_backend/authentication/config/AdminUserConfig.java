@@ -1,4 +1,4 @@
-package dev.jimmiehaskell.ppp_backend.config;
+package dev.jimmiehaskell.ppp_backend.authentication.config;
 
 import dev.jimmiehaskell.ppp_backend.entities.Role;
 import dev.jimmiehaskell.ppp_backend.entities.User;

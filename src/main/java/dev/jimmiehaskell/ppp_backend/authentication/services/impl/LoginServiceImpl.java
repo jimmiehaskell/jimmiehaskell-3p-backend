@@ -1,7 +1,8 @@
-package dev.jimmiehaskell.ppp_backend.controllers;
+package dev.jimmiehaskell.ppp_backend.authentication.services.impl;
 
-import dev.jimmiehaskell.ppp_backend.controllers.dtos.LoginRequest;
-import dev.jimmiehaskell.ppp_backend.controllers.dtos.LoginResponse;
+import dev.jimmiehaskell.ppp_backend.authentication.services.LoginService;
+import dev.jimmiehaskell.ppp_backend.authentication.dtos.LoginRequestDTO;
+import dev.jimmiehaskell.ppp_backend.authentication.dtos.LoginResponseDTO;
 import dev.jimmiehaskell.ppp_backend.entities.Role;
 import dev.jimmiehaskell.ppp_backend.repositories.UserRepository;
 import org.springframework.http.ResponseEntity;
@@ -10,33 +11,29 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
 import java.util.stream.Collectors;
 
-@RestController
-public class TokenController {
-    private BCryptPasswordEncoder passwordEncoder;
+public class LoginServiceImpl implements LoginService {
+    private final BCryptPasswordEncoder passwordEncoder;
     private final JwtEncoder jwtEncoder;
     private final UserRepository userRepository;
 
-    public TokenController(JwtEncoder jwtEncoder,
-                           UserRepository userRepository,
-                           BCryptPasswordEncoder passwordEncoder) {
+    public LoginServiceImpl(BCryptPasswordEncoder passwordEncoder,
+                            JwtEncoder jwtEncoder,
+                            UserRepository userRepository) {
         this.passwordEncoder = passwordEncoder;
         this.jwtEncoder = jwtEncoder;
         this.userRepository = userRepository;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
-        var user = userRepository.findByUsername(loginRequest.username());
+    @Override
+    public ResponseEntity<LoginResponseDTO> login(LoginRequestDTO request) {
+        var user = userRepository.findByUsername(request.username());
 
-        if (user.isEmpty() || !user.get().isLoginCorrect(loginRequest, passwordEncoder)) {
-            throw new BadCredentialsException("Usuário ou senha inválido");
+        if (user.isEmpty() || !user.get().isLoginCorrect(request, passwordEncoder)) {
+            throw new BadCredentialsException("Usuário ou senha inválido.");
         }
 
         var now = Instant.now();
@@ -57,6 +54,6 @@ public class TokenController {
 
         var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
-        return ResponseEntity.ok(new LoginResponse(jwtValue, expiresIn));
+        return ResponseEntity.ok(new LoginResponseDTO(jwtValue, expiresIn));
     }
 }

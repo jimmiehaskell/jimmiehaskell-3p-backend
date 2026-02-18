@@ -1,6 +1,6 @@
 package dev.jimmiehaskell.ppp_backend.entities;
 
-import dev.jimmiehaskell.ppp_backend.controllers.dtos.LoginRequest;
+import dev.jimmiehaskell.ppp_backend.authentication.dtos.LoginRequestDTO;
 import jakarta.persistence.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -38,8 +38,8 @@ public class User {
     }
 
     // metodos auxiliares
-    public boolean isLoginCorrect(LoginRequest loginRequest, PasswordEncoder passwordEncoder) {
-        return passwordEncoder.matches(loginRequest.password(), this.password);
+    public boolean isLoginCorrect(LoginRequestDTO loginRequestDTO, PasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches(loginRequestDTO.password(), this.password);
     }
 
     // Getters and Setters  //
